@@ -1,7 +1,9 @@
 os: linux
 arch:
   - amd64
-  - arm64
+  - arm64-graviton2
+virt: lxd
+group: edge
 dist: bionic
 language: python
 cache: pip
@@ -29,7 +31,9 @@ jobs:
     - arch: amd64
       env: PIP="cryptography"
       script: make docker-native
-    - arch: arm64
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
       env: PIP="cryptography"
       script: make docker-native
 
@@ -37,7 +41,9 @@ jobs:
     - arch: amd64
       env: PIP=Kibitzr
       script: make docker-native
-    - arch: arm64
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
       env: PIP=Kibitzr
       script: make docker-native
 
@@ -45,17 +51,29 @@ jobs:
     - arch: amd64
       env: PIP="gevent"
       script: make docker-native
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
+      env: PIP="gevent"
+      script: make docker-native
 
     # lxml
     - arch: amd64
       env: PIP="lxml"
       script: make docker-native
-    - arch: arm64
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
       env: PIP="lxml"
       script: make docker-native
 
     # psycopg2-binary
-    - arch: arm64
+    - arch: amd64
+      env: PIP=psycopg2-binary
+      before_script: sudo apt install -qy libpq-dev
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
       env: PIP=psycopg2-binary
       before_script: sudo apt install -qy libpq-dev
 
@@ -63,6 +81,8 @@ jobs:
     - arch: amd64
       env: DIST=alpine PIP="-r https://github.com/HelloZeroNet/ZeroNet/raw/py3/requirements.txt"
       script: make docker-native
-    - arch: arm64
+    - arch: arm64-graviton2
+      virt: lxd
+      group: edge
       env: DIST=alpine PIP="-r https://github.com/HelloZeroNet/ZeroNet/raw/py3/requirements.txt"
       script: make docker-native
